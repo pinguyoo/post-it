@@ -1,0 +1,30 @@
+<div class="note" [style.left.px]="note.coordinate.x" [style.top.px]="note.coordinate.y">
+  <div class="bar"></div>
+  <div class="body">
+      <div class="meta">
+          <div
+            class="title"
+            #title
+            [contentEditable]="titleEditing"
+            (dblclick)="edit('title')"
+            (keyup.enter)="update('title', title.textContent)"
+            (keyup.esc)="cancel('title')"
+            (blur)="cancel('title')"
+          >
+            {{ note.title }}
+        </div>
+        <mat-icon></mat-icon>
+      </div>
+      <div
+        class="content"
+        #content
+        [contentEditable]="contentEditing"
+        (dblclick)="edit('content')"
+        (keyup.enter)="update('content', content.textContent)"
+        (keyup.esc)="cancel('content')"
+        (blur)="cancel('content')"
+      >
+        {{ note.content }}
+      </div>
+  </div>
+</div>

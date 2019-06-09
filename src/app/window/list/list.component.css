@@ -1,0 +1,27 @@
+.list {
+    border-left: 1px solid black;
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    height: 50px;
+    padding: 0 10px;
+
+}
+
+.item span {
+    flex: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item button {
+    flex: 1;
+}
