@@ -22,4 +22,8 @@ export class ListComponent implements OnInit {
       .subscribe(notes => this.notes = notes);
   }
 
+  onClick(index: number) {
+    this.notes.forEach(note => note.selected = false);
+    this.notes[index].selected = true;
+  }
 }

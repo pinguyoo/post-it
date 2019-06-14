@@ -4,4 +4,5 @@ export class Note {
     content: string;
     color: string;
     coordinate: object;
+    selected: boolean;
 }

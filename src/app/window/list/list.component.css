@@ -1,8 +1,7 @@
 .list {
+    background: rgba(255, 255, 255, 0.7);
     border-left: 1px solid black;
-    width: 250px;
     height: 100%;
-    position: absolute;
     top: 0px;
     right: 0px;
 }
@@ -10,18 +9,30 @@
 .item {
     display: flex;
     align-items: center;
-    border: 1px solid black;
+    border-bottom: 1px solid #d8d8d8;
     height: 50px;
     padding: 0 10px;
+}
 
+.item:hover {
+    cursor: pointer;
 }
 
 .item span {
     flex: 2;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding: 0 5px;
 }
 
 .item button {
     flex: 1;
+}
+
+mat-icon {
+    width: 16px;
+}
+
+.selected{
+    background: #96a6eb;
 }

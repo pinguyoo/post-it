@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Note } from '../../note';
 
 @Component({
@@ -9,6 +9,9 @@ import { Note } from '../../note';
 export class NoteComponent implements OnInit {
 
   @Input() note: Note;
+
+  @Output()
+  private readonly close = new EventEmitter<boolean>();
 
   @ViewChild('content', {static: false})
   content: ElementRef;
@@ -22,8 +25,14 @@ export class NoteComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.titleEditing = false;
+    this.titleEditing = this.note.title.length === 0 ? true : false;
     this.contentEditing = false;
+  }
+
+  ngAfterViewInit() {
+    if (this.titleEditing) {
+      this.title.nativeElement.focus();
+    }
   }
 
   edit(item) {
@@ -48,12 +57,15 @@ export class NoteComponent implements OnInit {
 
   cancel(item) {
     if (item === 'title') {
-      this.title.nativeElement.textContent = this.note.title;
-      this.titleEditing = false
+      if (this.note.title.length === 0) {
+        this.close.emit(true);
+      } else {
+        this.title.nativeElement.textContent = this.note.title;
+        this.titleEditing = false;
+      }
     } else {
       this.content.nativeElement.textContent = this.note.content;
-      this.contentEditing = false
+      this.contentEditing = false;
     }
   }
-
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
-import { fromEvent, merge } from 'rxjs';
-import { concatAll, map, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import {  map, takeUntil, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-board',
@@ -12,12 +12,16 @@ import { concatAll, map, takeUntil, withLatestFrom } from 'rxjs/operators';
 export class BoardComponent implements OnInit {
 
   notes: Note[];
+  newNote: Note;
 
   @ViewChild('notesDOM', {static: false})
   notesDOM: ElementRef;
-  
+
   @ViewChild('board', {static: false})
   board: ElementRef;
+
+  @ViewChild('newDOM', {static: false})
+  newDOM: ElementRef;
 
   constructor(private noteService: NoteService) { }
 
@@ -31,34 +35,83 @@ export class BoardComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.createEventHandler();
+    this.setMovetHandler();
+    this.setBoardClickHandler();
   }
 
-  createEventHandler() {
-    const mouseUp$ = merge(fromEvent(this.notesDOM.nativeElement, 'mouseup'), fromEvent(this.board.nativeElement, 'mouseup'));
+  onDiscardNote(isClose: boolean): void {
+    if (isClose) {
+      delete this.newNote;
+    }
+  }
+
+  onClick(index: number) {
+    this.cancelSelected();
+    this.notes[index].selected = true;
+  }
+
+  private setMovetHandler() {
+    const mouseUp$ = fromEvent(this.notesDOM.nativeElement, 'mouseup');
     const mouseMove$ = fromEvent(this.board.nativeElement, 'mousemove');
     const mouseDown$ = fromEvent(this.notesDOM.nativeElement, 'mousedown');
 
     const source$ = mouseDown$.pipe(
-      map(event => mouseMove$.pipe(
-        takeUntil(mouseUp$),
-      )),
-      concatAll(),
-      withLatestFrom(mouseDown$, (move: MouseEvent, down: MouseEvent) => {
-        return { 
-          x: move.clientX - down.offsetX, 
-          y: move.clientY - down.offsetY,
-          target: event.target as HTMLElement 
+      flatMap((downEvent: MouseEvent) => {
+        const startX = downEvent.offsetX;
+        const startY = downEvent.offsetY;
+
+        return mouseMove$.pipe(
+          map((moveEvent: MouseEvent) => {
+            moveEvent.preventDefault();
+            return {
+              left: moveEvent.clientX - startX,
+              top: moveEvent.clientY - startY,
+              target: downEvent.target as HTMLElement,
+            };
+          }),
+          takeUntil(mouseUp$),
+        )
+      }),
+    )
+
+    source$.subscribe((element) => {
+      element.target.parentElement.style.left = element.left + 'px';
+      element.target.parentElement.style.top = element.top + 'px';
+    });
+  }
+
+  private setBoardClickHandler() {
+    const click$ = fromEvent(this.board.nativeElement, 'click');
+    const source$ = click$.pipe(
+      map((event: MouseEvent) => {
+        return {
+          x: event.clientX,
+          y: event.clientY,
+          target: event.target as HTMLElement,
         }
       }),
     );
 
-    source$.subscribe((element) => {
-      if (element.target.className === 'bar') {
-        element.target.parentElement.style.left = element.x + 'px';
-        element.target.parentElement.style.top = element.y + 'px';
+    source$.subscribe(element => {
+      if (element.target.className === 'board') {
+        this.createNote({ x: element.x, y: element.y });
       }
     });
-  } 
+  }
 
+  private createNote(coordinate) {
+    this.cancelSelected();
+    this.newNote = {
+      id: this.notes.length,
+      title: '',
+      content: '',
+      color: 'yellow',
+      coordinate: coordinate,
+      selected: true,
+    };
+  }
+
+  private cancelSelected() {
+    this.notes.forEach(note => note.selected = false);
+  }
 }
