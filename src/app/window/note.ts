@@ -1,8 +1,12 @@
 export class Note {
-    id: number;
-    title: string;
-    content: string;
-    color: string;
-    coordinate: object;
-    selected: boolean;
+  readonly id: number;
+  title: string;
+  content: string;
+  color: string;
+  coordinate: any;
+  selected: boolean;
+
+  constructor(id: number) {
+    this.id = id;
+  }
 }
