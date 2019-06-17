@@ -59,7 +59,7 @@ export class NoteService {
     localStorage.setItem('notes', JSON.stringify(this.notes));
   }
 
-  upsertNote(note: Note): Note {
+  upsertNote(note: Note): Observable<Note> {
     if (!this.notes) {
       this.getNotes();
     }
@@ -83,7 +83,7 @@ export class NoteService {
       });
     }
     this.saveNotes();
-    return targetNote ? targetNote : newNote;
+    return targetNote ? of(targetNote) : of(newNote);
   }
 
   getValidId(id: number): number {
@@ -91,5 +91,13 @@ export class NoteService {
       return (_.max(_.map(this.notes, 'id')) || 0) + 1;
     }
     return id;
+  }
+
+  deleteNote(id: number): Observable<Note[]> {
+    let movedArray = _.remove(this.notes, (note) => {
+      return note.id === id;
+    });
+    this.saveNotes();
+    return of(movedArray);
   }
 }
