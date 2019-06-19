@@ -45,6 +45,13 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  onSave(note: Note): void {
+    this.noteService.upsertNote(note)
+      .subscribe(newNote => {
+        delete this.newNote;
+      });
+  }
+
   onClick(index: number) {
     this.cancelSelected();
     this.notes[index].selected = true;
@@ -102,7 +109,7 @@ export class BoardComponent implements OnInit {
   private createNote(coordinate) {
     this.cancelSelected();
     this.newNote = {
-      id: this.notes.length,
+      id: this.notes.length + 1,
       title: '',
       content: '',
       color: 'yellow',

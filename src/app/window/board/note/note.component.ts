@@ -12,6 +12,8 @@ export class NoteComponent implements OnInit {
 
   @Output()
   private readonly close = new EventEmitter<boolean>();
+  @Output()
+  private readonly save = new EventEmitter<Note>();
 
   @ViewChild('content', {static: false})
   content: ElementRef;
@@ -53,6 +55,7 @@ export class NoteComponent implements OnInit {
       this.note.content = value;
       this.contentEditing = false;
     }
+    this.save.emit(this.note);
   }
 
   cancel(item) {
