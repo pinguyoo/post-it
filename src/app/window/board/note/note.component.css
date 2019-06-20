@@ -34,7 +34,7 @@
 }
 
 .title {
-    flex: 2;
+    flex: 5;
     background: transparent;
     border-style: none;
     overflow: hidden;
@@ -42,12 +42,14 @@
 }
 
 mat-icon {
-    flex: 1
+    flex: 1;
 }
 
 .content {
     width: 100%;
+    min-height: 50px;
     background: transparent;
     overflow-wrap: break-word;
     border-style: none;
+    white-space: pre-wrap;
 }

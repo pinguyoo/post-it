@@ -27,13 +27,13 @@ export class NoteComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.titleEditing = this.note.title.length === 0 ? true : false;
-    this.contentEditing = false;
+    this.titleEditing = false;
+    this.contentEditing = (this.note.title.length === 0 && this.note.content.length === 0) ? true : false;
   }
 
   ngAfterViewInit() {
-    if (this.titleEditing) {
-      this.title.nativeElement.focus();
+    if (this.contentEditing) {
+      this.content.nativeElement.focus();
     }
   }
 
@@ -55,20 +55,37 @@ export class NoteComponent implements OnInit {
       this.note.content = value;
       this.contentEditing = false;
     }
+    if (this.note.title.length === 0) {
+      this.note.title = '未命名';
+    }
     this.save.emit(this.note);
   }
 
   cancel(item) {
     if (item === 'title') {
-      if (this.note.title.length === 0) {
-        this.close.emit(true);
-      } else {
-        this.title.nativeElement.textContent = this.note.title;
-        this.titleEditing = false;
-      }
+      this.title.nativeElement.textContent = this.note.title;
+      this.titleEditing = false;
     } else {
       this.content.nativeElement.textContent = this.note.content;
       this.contentEditing = false;
     }
+
+    if (this.note.title.length === 0 && this.note.content.length === 0) {
+      this.close.emit(true);
+    }
   }
+
+  /*
+  blurBehavior(item, value) {
+    console.log(this.title.nativeElement.textContent.length);
+    if (this.note.title.length === 0 &&
+        this.note.content.length === 0 &&
+        this.title.nativeElement.textContent.length === 0 &&
+        this.content.nativeElement.textContent.length === 0) {
+      this.cancel(item);
+    } else {
+      this.update(item, value);
+    }
+  }
+  */
 }
