@@ -1,6 +1,6 @@
 <div class="note" [class.selected]="note.selected" [style.left.px]="note.coordinate.x" [style.top.px]="note.coordinate.y">
   <div class="bar" [class.selected]="note.selected"></div>
-  <div class="body">
+  <div class="body" #noteBdy>
       <div class="meta">
           <div
             class="title"
@@ -13,7 +13,8 @@
           >
             {{ note.title }}
         </div>
-        <mat-icon></mat-icon>
+        <input type="color" value="#ffffa5" (change)="changeNoteColor()" #colorPic>
+        <!--<mat-icon></mat-icon>-->
       </div>
       <div
         class="content"
