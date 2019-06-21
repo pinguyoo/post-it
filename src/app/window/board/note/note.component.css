@@ -53,3 +53,20 @@ mat-icon {
     border-style: none;
     white-space: pre-wrap;
 }
+
+.icon-pets {
+  border: none;
+  background-color: transparent;
+  background-image: url("../../../../assets/images/delete.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.icon-pets::-webkit-color-swatch {
+  background-color: transparent!important;
+  border: none;
+}
