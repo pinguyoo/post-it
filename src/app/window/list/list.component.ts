@@ -26,4 +26,11 @@ export class ListComponent implements OnInit {
     this.notes.forEach(note => note.selected = false);
     this.notes[index].selected = true;
   }
+
+  deleteNote(note: Note) {
+    this.noteService.deleteNote(note.id)
+      .subscribe((deletedNotes) => {
+        console.log('deleted', deletedNotes);
+      });
+  }
 }
