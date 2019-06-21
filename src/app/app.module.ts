@@ -15,12 +15,12 @@ import { NoteComponent } from './window/board/note/note.component';
     WindowComponent,
     ListComponent,
     BoardComponent,
-    NoteComponent,
+    NoteComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    MatIconModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
