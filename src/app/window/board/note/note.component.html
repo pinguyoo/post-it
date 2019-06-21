@@ -1,6 +1,6 @@
 <div class="note" [class.selected]="note.selected" [style.left.px]="note.coordinate.x" [style.top.px]="note.coordinate.y">
   <div class="bar" [class.selected]="note.selected"></div>
-  <div class="body" #noteBdy>
+  <div class="body" [style.background]="note.color">
       <div class="meta">
           <div
             class="title"
@@ -13,7 +13,12 @@
           >
             {{ note.title }}
         </div>
-        <input class="icon-pets" type="color" name="notecolor" value="#ffffa5" (change)="changeNoteColor()" #colorPic>
+        <input
+          class="icon-pets"
+          type="color"
+          [value]="note.color"
+          (change)="changeNoteColor($event)"
+        >
       </div>
       <div
         class="content"

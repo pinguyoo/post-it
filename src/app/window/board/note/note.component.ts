@@ -21,12 +21,6 @@ export class NoteComponent implements OnInit {
   @ViewChild('title', {static: false})
   title: ElementRef;
 
-  @ViewChild('noteBdy', {static: false})
-  noteBdy: ElementRef;
-
-  @ViewChild('colorPic', {static: false})
-  colorPic: ElementRef;
-
   titleEditing: boolean;
   contentEditing: boolean;
 
@@ -82,9 +76,10 @@ export class NoteComponent implements OnInit {
   }
 
   changeNoteColor(event) {
-    //console.log(event);
-    //this.noteBdy.nativeElement.style.background = event.target.value;
+    this.note.color = event.target.value;
+    this.save.emit(this.note);
   }
+
   /*
   blurBehavior(item, value) {
     console.log(this.title.nativeElement.textContent.length);

@@ -112,7 +112,7 @@ export class BoardComponent implements OnInit {
       id: this.notes.length + 1,
       title: '',
       content: '',
-      color: 'yellow',
+      color: '#ffffa5',
       coordinate: coordinate,
       selected: true,
     };
