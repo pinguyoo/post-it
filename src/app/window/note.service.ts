@@ -71,10 +71,12 @@ export class NoteService {
       newNote = new Note(id);
       newNote.title = note.title || '';
       newNote.content = note.content || '';
+      newNote.color = note.color || '';
       newNote.coordinate = note.coordinate || {};
       newNote.coordinate.x = note.coordinate.x || 0;
       newNote.coordinate.y = note.coordinate.y || 0;
       newNote.coordinate.z = note.coordinate.z || 0;
+      newNote.selected = note.selected || false;
       this.notes.push(newNote);
     } else {
       // update
