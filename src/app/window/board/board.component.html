@@ -1,6 +1,6 @@
 <div class="board" #board>
   <div #notesDOM>
-    <app-note *ngFor="let note of notes; let i = index" [attr.id]="i" [note]="note" (click)="onClick(i)"></app-note>
+    <app-note *ngFor="let note of notes; let i = index" [attr.id]="i" [note]="note" (click)="onClick(i)" (save)="onSave($event)"></app-note>
     <app-note #newDOM *ngIf="newNote" [note]="newNote" (close)="onDiscardNote($event)" (save)="onSave($event)"></app-note>
   </div>
 </div>

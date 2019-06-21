@@ -35,7 +35,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.setMovetHandler();
+    this.setMoveHandler();
     this.setBoardClickHandler();
   }
 
@@ -57,7 +57,7 @@ export class BoardComponent implements OnInit {
     this.notes[index].selected = true;
   }
 
-  private setMovetHandler() {
+  private setMoveHandler() {
     const mouseUp$ = fromEvent(this.notesDOM.nativeElement, 'mouseup');
     const mouseMove$ = fromEvent(this.board.nativeElement, 'mousemove');
     const mouseDown$ = fromEvent(this.notesDOM.nativeElement, 'mousedown');

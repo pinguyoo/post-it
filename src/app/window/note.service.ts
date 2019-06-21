@@ -45,7 +45,7 @@ export class NoteService {
     let cacheStr: string = localStorage.getItem('notes');
     if (!cacheStr) {
       this.notes = [];
-      return of([]);
+      return of(this.notes);
     }
     let cache: Note[] = Array.from(JSON.parse(cacheStr)) || [];
     this.notes = cache;
