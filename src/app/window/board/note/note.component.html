@@ -6,6 +6,7 @@
             class="title"
             #title
             [contentEditable]="titleEditing"
+            [class.editing]="titleEditing"
             (dblclick)="edit('title')"
             (keyup.enter)="update('title', title.textContent)"
             (keyup.esc)="cancel('title')"
@@ -24,6 +25,7 @@
         class="content"
         #content
         [contentEditable]="contentEditing"
+        [class.editing]="contentEditing"
         (dblclick)="edit('content')"
         (keyup.enter)="update('content', content.textContent)"
         (keyup.esc)="cancel('content')"

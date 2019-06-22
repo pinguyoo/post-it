@@ -34,23 +34,25 @@
 
 .title {
     flex: 5;
+    padding: 3%;
     background: transparent;
     border-style: none;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-mat-icon {
-    flex: 1;
-}
-
 .content {
-    width: 100%;
+    width: 94%;
+    padding: 3%;
     min-height: 50px;
     background: transparent;
     overflow-wrap: break-word;
     border-style: none;
     white-space: pre-wrap;
+}
+
+.title.editing, .content.editing {
+    background: rgba(210, 210, 210, 0.5);
 }
 
 .icon-pets {
