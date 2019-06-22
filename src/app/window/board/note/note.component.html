@@ -10,10 +10,8 @@
             (dblclick)="edit('title')"
             (keyup.enter)="update('title', title.textContent)"
             (keyup.esc)="cancel('title')"
-            (blur)="cancel('title')"
-          >
-            {{ note.title }}
-        </div>
+            (blur)="blurBehavior('title', title.textContent)"
+          >{{ note.title }}</div>
         <input
           class="icon-pets"
           type="color"
@@ -29,9 +27,7 @@
         (dblclick)="edit('content')"
         (keyup.enter)="update('content', content.textContent)"
         (keyup.esc)="cancel('content')"
-        (blur)="cancel('content')"
-      >
-        {{ note.content }}
-      </div>
+        (blur)="blurBehavior('content', content.textContent)"
+      >{{ note.content }}</div>
   </div>
 </div>

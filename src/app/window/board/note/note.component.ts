@@ -80,17 +80,17 @@ export class NoteComponent implements OnInit {
     this.save.emit(this.note);
   }
 
-  /*
   blurBehavior(item, value) {
-    console.log(this.title.nativeElement.textContent.length);
+    //console.log("U0 note:"+this.note.content+"; html:" + this.content.nativeElement.textContent+";");
     if (this.note.title.length === 0 &&
         this.note.content.length === 0 &&
         this.title.nativeElement.textContent.length === 0 &&
         this.content.nativeElement.textContent.length === 0) {
       this.cancel(item);
     } else {
+      //console.log("U1 note:"+this.note.content+"; html:" + this.content.nativeElement.textContent+";");
       this.update(item, value);
+      //console.log("U2 note:"+this.note.content+"; html:" + this.content.nativeElement.textContent+";");
     }
   }
-  */
 }
