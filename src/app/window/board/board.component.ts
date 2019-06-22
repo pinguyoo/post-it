@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
 import { fromEvent } from 'rxjs';
-import {  map, takeUntil, flatMap } from 'rxjs/operators';
+import {  map, takeUntil, flatMap, finalize } from 'rxjs/operators';
+import { maxBy as _maxBy, find as _find } from 'lodash';
 
 @Component({
   selector: 'app-board',
@@ -76,6 +77,20 @@ export class BoardComponent implements OnInit {
               target: downEvent.target as HTMLElement,
             };
           }),
+          finalize(() => {
+            const mouseUpEvent = event as MouseEvent;
+            const target = event.target as HTMLElement;
+            const toppest = _maxBy(this.notes, function(note) {
+              return note.coordinate.z;
+            });
+            let note = _find(this.notes, { 'id': parseInt(target.id) });
+            if (note) {
+              note.coordinate.x = mouseUpEvent.clientX - startX;
+              note.coordinate.y = mouseUpEvent.clientY - startY;
+              note.coordinate.z = toppest.coordinate.z + 1;
+              this.onSave(note);
+            }
+          }),
           takeUntil(mouseUp$),
         )
       }),
@@ -101,7 +116,7 @@ export class BoardComponent implements OnInit {
 
     source$.subscribe(element => {
       if (element.target.className === 'board') {
-        this.createNote({ x: element.x, y: element.y });
+        this.createNote({ x: element.x, y: element.y, z: 0 });
       }
     });
   }

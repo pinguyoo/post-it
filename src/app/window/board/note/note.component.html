@@ -1,5 +1,5 @@
-<div class="note" [class.selected]="note.selected" [style.left.px]="note.coordinate.x" [style.top.px]="note.coordinate.y">
-  <div class="bar" [class.selected]="note.selected"></div>
+<div class="note" [class.selected]="note.selected" [style.left.px]="note.coordinate.x" [style.top.px]="note.coordinate.y" [style.z-index]="note.coordinate.z">
+  <div class="bar" [attr.id]="note.id" [class.selected]="note.selected"></div>
   <div class="body" [style.background]="note.color">
       <div class="meta">
           <div

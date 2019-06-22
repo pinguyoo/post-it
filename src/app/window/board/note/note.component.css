@@ -6,7 +6,7 @@
 
 .note.selected {
     border: 2px solid black;
-    z-index: 2;
+    z-index: 99999 !important;
 }
 
 .bar {

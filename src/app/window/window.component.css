@@ -2,6 +2,7 @@
    background: url('../../assets/images/board.jpg') no-repeat center;
    display: flex;
    height: 100%;
+   z-index: 0;
 }
 
 app-board {
