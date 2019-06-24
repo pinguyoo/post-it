@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
-import { fromEvent } from 'rxjs';
+import { fromEvent, interval } from 'rxjs';
 import {  map, takeUntil, flatMap, finalize } from 'rxjs/operators';
 import { maxBy as _maxBy, find as _find } from 'lodash';
 
@@ -97,8 +97,13 @@ export class BoardComponent implements OnInit {
     )
 
     source$.subscribe((element) => {
-      element.target.parentElement.style.left = element.left + 'px';
-      element.target.parentElement.style.top = element.top + 'px';
+      const parent = this.board.nativeElement;
+      const target = element.target.parentElement;
+
+      const left = element.left < 0 ? 0 : Math.min(element.left, parent.offsetWidth - target.offsetWidth);
+      const top = element.top < 0 ? 0 : Math.min(element.top, parent.offsetHeight - target.offsetHeight);
+      target.style.left = left + 'px';
+      target.style.top = top + 'px';
     });
   }
 
