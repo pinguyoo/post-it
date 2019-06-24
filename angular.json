@@ -25,7 +25,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/window/tinycolor.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -85,7 +87,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/window/tinycolor.js"
+            ]
           }
         },
         "lint": {

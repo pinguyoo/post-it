@@ -2,6 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { Note } from '../../note';
 import { cloneDeep as _cloneDeep } from 'lodash';
 
+declare var tinycolor: any;
+
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
@@ -24,12 +26,14 @@ export class NoteComponent implements OnInit {
 
   titleEditing: boolean;
   contentEditing: boolean;
+  darkMode: boolean;
 
   constructor() { }
 
   ngOnInit() {
     this.titleEditing = false;
     this.contentEditing = (this.note.content.length === 0) ? true : false;
+    this.darkMode = tinycolor(this.note.color).isDark();
   }
 
   ngAfterViewInit() {
@@ -98,6 +102,7 @@ export class NoteComponent implements OnInit {
 
   changeNoteColor(event) {
     this.note.color = event.target.value;
+    this.darkMode = tinycolor(this.note.color).isDark();
     this.save.emit(this.note);
   }
 
