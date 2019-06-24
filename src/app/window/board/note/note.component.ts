@@ -48,7 +48,7 @@ export class NoteComponent implements OnInit {
     }
   }
 
-  onEnter() {
+  onEnter(event) {
     this.diableEditing();
   }
 

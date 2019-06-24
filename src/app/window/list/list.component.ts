@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
+import { maxBy as _maxBy, find as _find } from 'lodash';
 
 @Component({
   selector: 'app-list',
@@ -24,7 +25,12 @@ export class ListComponent implements OnInit {
 
   onClick(index: number) {
     this.notes.forEach(note => note.selected = false);
+    const toppest = _maxBy(this.notes, function(note) {
+      return note.coordinate.z;
+    });
+    this.notes[index].coordinate.z = toppest.coordinate.z + 1;
     this.notes[index].selected = true;
+    this.noteService.upsertNote(this.notes[index]).subscribe();
   }
 
   deleteNote(note: Note) {

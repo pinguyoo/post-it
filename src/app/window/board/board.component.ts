@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef  } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
-import { fromEvent, interval } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import {  map, takeUntil, flatMap, finalize } from 'rxjs/operators';
 import { maxBy as _maxBy, find as _find, remove as _remove } from 'lodash';
 
@@ -87,6 +87,7 @@ export class BoardComponent implements OnInit {
               note.coordinate.x = mouseUpEvent.clientX - startX;
               note.coordinate.y = mouseUpEvent.clientY - startY;
               note.coordinate.z = toppest.coordinate.z + 1;
+              note.selected = true;
               this.onSave(note);
             }
           }),

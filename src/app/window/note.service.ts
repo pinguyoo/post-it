@@ -35,6 +35,15 @@ export class NoteService {
     if (!this.notes) {
       this.getNotes();
     }
+
+    let selectedNote: Note = _.find(this.notes, function(item) {
+      return item.selected && item.id !== note.id;
+    });
+
+    if (selectedNote) {
+      selectedNote.selected = false;
+    }
+
     let targetNote: Note = _.find(this.notes, ['id', note.id]);
     let newNote: Note;
     if (!targetNote) {

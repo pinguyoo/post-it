@@ -8,7 +8,7 @@
             [contentEditable]="titleEditing"
             [class.editing]="titleEditing"
             (dblclick)="edit('title')"
-            (keyup.enter)="onEnter()"
+            (keyup.enter)="onEnter($event)"
             (keyup.esc)="onEsc($event)"
             (blur)="onBlur($event)"
           >{{ note.title }}</div>
@@ -25,7 +25,7 @@
         [contentEditable]="contentEditing"
         [class.editing]="contentEditing"
         (dblclick)="edit('content')"
-        (keyup.enter)="onEnter()"
+        (keyup.enter)="onEnter($event)"
         (keyup.esc)="onEsc($event)"
         (blur)="onBlur($event)"
       >{{ note.content }}</div>
