@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef  } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
 import { fromEvent, interval } from 'rxjs';
 import {  map, takeUntil, flatMap, finalize } from 'rxjs/operators';
-import { maxBy as _maxBy, find as _find } from 'lodash';
+import { maxBy as _maxBy, find as _find, remove as _remove } from 'lodash';
 
 @Component({
   selector: 'app-board',
@@ -24,7 +24,7 @@ export class BoardComponent implements OnInit {
   @ViewChild('newDOM', {static: false})
   newDOM: ElementRef;
 
-  constructor(private noteService: NoteService) { }
+  constructor(private noteService: NoteService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getNotes();
@@ -40,17 +40,16 @@ export class BoardComponent implements OnInit {
     this.setBoardClickHandler();
   }
 
-  onDiscardNote(isClose: boolean): void {
-    if (isClose) {
-      delete this.newNote;
+  onDiscardNote(id: number): void {
+    if (id) {
+      _remove(this.notes, { id: id });
+      this.changeDetectorRef.detectChanges();
     }
   }
 
   onSave(note: Note): void {
     this.noteService.upsertNote(note)
-      .subscribe(newNote => {
-        delete this.newNote;
-      });
+      .subscribe(newNote => {});
   }
 
   onClick(index: number) {
@@ -128,14 +127,15 @@ export class BoardComponent implements OnInit {
 
   private createNote(coordinate) {
     this.cancelSelected();
-    this.newNote = {
+    const newNote = {
       id: this.notes.length + 1,
-      title: '',
+      title: '未命名',
       content: '',
       color: '#ffffa5',
       coordinate: coordinate,
       selected: true,
     };
+    this.notes.push(newNote);
   }
 
   private cancelSelected() {

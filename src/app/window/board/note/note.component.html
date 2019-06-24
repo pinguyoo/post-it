@@ -1,6 +1,6 @@
 <div class="note" [class.selected]="note.selected" [style.left.px]="note.coordinate.x" [style.top.px]="note.coordinate.y" [style.z-index]="note.coordinate.z">
   <div class="bar" [attr.id]="note.id" [class.selected]="note.selected"></div>
-  <div class="body" [style.background]="note.color">
+  <div class="body" [attr.id]="note.id" [style.background]="note.color">
       <div class="meta">
           <div
             class="title"
@@ -8,9 +8,9 @@
             [contentEditable]="titleEditing"
             [class.editing]="titleEditing"
             (dblclick)="edit('title')"
-            (keyup.enter)="update('title', title.textContent)"
-            (keyup.esc)="cancel('title')"
-            (blur)="blurBehavior('title', title.textContent)"
+            (keyup.enter)="onEnter()"
+            (keyup.esc)="onEsc($event)"
+            (blur)="onBlur($event)"
           >{{ note.title }}</div>
         <input
           class="icon-pets"
@@ -25,9 +25,9 @@
         [contentEditable]="contentEditing"
         [class.editing]="contentEditing"
         (dblclick)="edit('content')"
-        (keyup.enter)="update('content', content.textContent)"
-        (keyup.esc)="cancel('content')"
-        (blur)="blurBehavior('content', content.textContent)"
+        (keyup.enter)="onEnter()"
+        (keyup.esc)="onEsc($event)"
+        (blur)="onBlur($event)"
       >{{ note.content }}</div>
   </div>
 </div>
