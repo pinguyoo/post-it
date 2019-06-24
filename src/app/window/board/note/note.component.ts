@@ -52,6 +52,10 @@ export class NoteComponent implements OnInit {
     this.diableEditing();
   }
 
+  onEnterDown(event) {
+    event.preventDefault();
+  }
+
   onEsc(item) {
     this.diableEditing();
     this.restore(item);
