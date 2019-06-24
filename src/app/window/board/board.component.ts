@@ -128,7 +128,7 @@ export class BoardComponent implements OnInit {
   private createNote(coordinate) {
     this.cancelSelected();
     const newNote = {
-      id: this.notes.length + 1,
+      id: this.noteService.getValidId(),
       title: '未命名',
       content: '',
       color: '#ffffa5',
