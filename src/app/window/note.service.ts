@@ -60,7 +60,7 @@ export class NoteService {
     return targetNote ? of(targetNote) : of(newNote);
   }
 
-  getValidId(id: number): number {
+  getValidId(id?: number): number {
     if (!id || _.find(this.notes, ['id', id]) !== undefined) {
       return (_.max(_.map(this.notes, 'id')) || 0) + 1;
     }
