@@ -39,6 +39,7 @@
     border-style: none;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: bold;
 }
 
 .content {
