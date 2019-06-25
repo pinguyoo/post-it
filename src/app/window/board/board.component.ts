@@ -111,9 +111,10 @@ export class BoardComponent implements OnInit {
     const click$ = fromEvent(this.board.nativeElement, 'click');
     const source$ = click$.pipe(
       map((event: MouseEvent) => {
+        const parent = this.board.nativeElement;
         return {
-          x: event.clientX,
-          y: event.clientY,
+          x: event.clientX + 200 > parent.offsetWidth ? event.clientX - 200 : event.clientX,
+          y: event.clientY + 130 > parent.offsetHeight ? event.clientY - 130 : event.clientY,
           target: event.target as HTMLElement,
         }
       }),
