@@ -112,22 +112,25 @@ export class BoardComponent implements OnInit {
     const source$ = click$.pipe(
       map((event: MouseEvent) => {
         const parent = this.board.nativeElement;
+        const x = event.clientX + 200 > parent.offsetWidth ? event.clientX - 200 : event.clientX;
+        const y = event.clientY + 130 > parent.offsetHeight ? event.clientY - 130 : event.clientY;
         return {
-          x: event.clientX + 200 > parent.offsetWidth ? event.clientX - 200 : event.clientX,
-          y: event.clientY + 130 > parent.offsetHeight ? event.clientY - 130 : event.clientY,
+          x: x,
+          y: y,
           target: event.target as HTMLElement,
+          maxHeight: (parent.offsetHeight - y) + 'px',
         }
       }),
     );
 
     source$.subscribe(element => {
       if (element.target.className === 'board') {
-        this.createNote({ x: element.x, y: element.y, z: 0 });
+        this.createNote({ x: element.x, y: element.y, z: 0 }, element.maxHeight);
       }
     });
   }
 
-  private createNote(coordinate) {
+  private createNote(coordinate, maxHeight) {
     this.cancelSelected();
     const newNote = {
       id: this.noteService.getValidId(),
@@ -136,6 +139,7 @@ export class BoardComponent implements OnInit {
       color: '#ffffa5',
       coordinate: coordinate,
       selected: true,
+      maxHeight: maxHeight,
     };
     this.notes.push(newNote);
   }
