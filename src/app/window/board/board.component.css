@@ -1,3 +1,10 @@
 .board {
     height: 100%;
 }
+
+.bimg {
+    position: absolute;
+    right: 3%;
+    bottom: 3%;
+    z-index: 10000000;;
+}

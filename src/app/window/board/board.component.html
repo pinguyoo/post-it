@@ -3,4 +3,5 @@
     <app-note *ngFor="let note of notes; let i = index" [attr.id]="i" [note]="note" (click)="onClick(i)" (save)="onSave($event)" (close)="onDiscardNote($event)"></app-note>
     <!-- <app-note #newDOM *ngIf="newNote" [note]="newNote" (close)="onDiscardNote($event)" (save)="onSave($event)"></app-note> -->
   </div>
+  <img class="bimg" src="../../../assets/images/kitty.png" alt="Kitty">
 </div>
