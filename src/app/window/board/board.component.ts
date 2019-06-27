@@ -79,13 +79,14 @@ export class BoardComponent implements OnInit {
           finalize(() => {
             const mouseUpEvent = event as MouseEvent;
             const target = event.target as HTMLElement;
+            const parent = this.board.nativeElement;
             const toppest = _maxBy(this.notes, function(note) {
               return note.coordinate.z;
             });
             let note = _find(this.notes, { 'id': parseInt(target.id) });
             if (note) {
-              note.coordinate.x = mouseUpEvent.clientX - startX;
-              note.coordinate.y = mouseUpEvent.clientY - startY;
+              note.coordinate.x = ((mouseUpEvent.clientX - startX) / window.innerWidth) * 100;
+              note.coordinate.y = ((mouseUpEvent.clientY - startY) / window.innerHeight) * 100;
               note.coordinate.z = toppest.coordinate.z + 1;
               note.selected = true;
               this.onSave(note);
@@ -102,8 +103,8 @@ export class BoardComponent implements OnInit {
 
       const left = element.left < 0 ? 0 : Math.min(element.left, parent.offsetWidth - target.offsetWidth);
       const top = element.top < 0 ? 0 : Math.min(element.top, parent.offsetHeight - target.offsetHeight);
-      target.style.left = left + 'px';
-      target.style.top = top + 'px';
+      target.style.left = (left / window.innerWidth) * 100  + '%';
+      target.style.top = (top / window.innerHeight) * 100 + '%';
     });
   }
 
@@ -115,8 +116,8 @@ export class BoardComponent implements OnInit {
         const x = event.clientX + 200 > parent.offsetWidth ? event.clientX - 200 : event.clientX;
         const y = event.clientY + 130 > parent.offsetHeight ? event.clientY - 130 : event.clientY;
         return {
-          x: x,
-          y: y,
+          x: (x / window.innerWidth) * 100,
+          y: (y / window.innerHeight) * 100,
           target: event.target as HTMLElement,
           maxHeight: (parent.offsetHeight - y) + 'px',
         }

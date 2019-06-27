@@ -12,4 +12,5 @@ app-board {
 app-list {
    flex: 1;
    min-width: 350px;
+   z-index: 99999 !important;
 }
