@@ -55,6 +55,7 @@ export class BoardComponent implements OnInit {
   onClick(index: number) {
     this.cancelSelected();
     this.notes[index].selected = true;
+    this.noteService.scrollToNote(this.notes[index].id);
   }
 
   private setMoveHandler() {
@@ -66,6 +67,8 @@ export class BoardComponent implements OnInit {
       flatMap((downEvent: MouseEvent) => {
         const startX = downEvent.offsetX;
         const startY = downEvent.offsetY;
+        const downEventTarget = downEvent.target as HTMLElement;
+        const moveTarget = downEventTarget.classList[0] === 'bar' ? downEventTarget.parentElement : downEventTarget.parentElement.parentElement;
 
         return mouseMove$.pipe(
           map((moveEvent: MouseEvent) => {
@@ -73,20 +76,17 @@ export class BoardComponent implements OnInit {
             return {
               left: moveEvent.clientX - startX,
               top: moveEvent.clientY - startY,
-              target: downEvent.target as HTMLElement,
+              target: moveTarget,
             };
           }),
           finalize(() => {
-            const mouseUpEvent = event as MouseEvent;
-            const target = event.target as HTMLElement;
-            const parent = this.board.nativeElement;
             const toppest = _maxBy(this.notes, function(note) {
               return note.coordinate.z;
             });
-            let note = _find(this.notes, { 'id': parseInt(target.id) });
+            let note = _find(this.notes, { 'id': parseInt(moveTarget.id) });
             if (note) {
-              note.coordinate.x = ((mouseUpEvent.clientX - startX) / window.innerWidth) * 100;
-              note.coordinate.y = ((mouseUpEvent.clientY - startY) / window.innerHeight) * 100;
+              note.coordinate.x = parseInt(moveTarget.style.left.substring(0, moveTarget.style.left.length - 1));
+              note.coordinate.y = parseInt(moveTarget.style.top.substring(0, moveTarget.style.top.length - 1));
               note.coordinate.z = toppest.coordinate.z + 1;
               note.selected = true;
               this.onSave(note);
@@ -99,7 +99,7 @@ export class BoardComponent implements OnInit {
 
     source$.subscribe((element) => {
       const parent = this.board.nativeElement;
-      const target = element.target.parentElement;
+      const target = element.target;
 
       const left = element.left < 0 ? 0 : Math.min(element.left, parent.offsetWidth - target.offsetWidth);
       const top = element.top < 0 ? 0 : Math.min(element.top, parent.offsetHeight - target.offsetHeight);

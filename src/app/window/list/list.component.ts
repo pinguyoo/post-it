@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
 import { maxBy as _maxBy, find as _find } from 'lodash';
@@ -12,10 +12,23 @@ export class ListComponent implements OnInit {
 
   notes: Note[]
 
+  @ViewChildren('notesDOM')
+  notesDOM: QueryList<ElementRef>;
+
   constructor(private noteService: NoteService) { }
 
   ngOnInit() {
     this.getNotes();
+  }
+
+  ngAfterViewInit() {
+    this.noteService.scrollSubject.subscribe(id => {
+      this.notesDOM.forEach(dom => {
+        if (dom.nativeElement.id === id.toString()) {
+          dom.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      })
+    });
   }
 
   getNotes() {

@@ -1,5 +1,5 @@
 <div class="list">
-  <div *ngFor="let note of notes; let i=index" class="item" [class.selected]="note.selected" (click)="onClick(i)">
+  <div #notesDOM *ngFor="let note of notes; let i=index" [attr.id]="note.id" class="item" [class.selected]="note.selected" (click)="onClick(i)">
     <span>{{ note.title }}</span>
     <mat-icon svgIcon="post-it:delete" (click)="deleteNote(note)"></mat-icon>
   </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Note } from './note';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import * as _ from 'lodash';
 
@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 export class NoteService {
 
   notes: Note[];
+  private subject = new BehaviorSubject(0);
+  scrollSubject = this.subject.asObservable();
 
   constructor() { }
 
@@ -82,5 +84,9 @@ export class NoteService {
     });
     this.saveNotes();
     return of(movedArray);
+  }
+
+  scrollToNote(id: number) {
+    this.subject.next(id);
   }
 }
