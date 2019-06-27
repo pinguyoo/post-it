@@ -41,6 +41,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .content {
@@ -53,7 +54,12 @@
     white-space: pre-wrap;
 }
 
-.title.editing, .content.editing {
+.title.editing {
+    background: rgba(210, 210, 210, 0.5);
+    white-space: normal;
+}
+
+.content.editing {
     background: rgba(210, 210, 210, 0.5);
 }
 
