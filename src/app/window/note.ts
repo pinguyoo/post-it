@@ -5,6 +5,7 @@ export class Note {
   color: string;
   coordinate: any;
   selected: boolean;
+  maxHeight: number;
 
   constructor(id: number) {
     this.id = id;
