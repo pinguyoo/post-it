@@ -74,7 +74,8 @@ export class NoteComponent implements OnInit {
     }
 
     if (this.note.content.length === 0 && value.length === 0) {
-      this.close.emit(parseInt(event.target.parentElement.id));
+      this.close.emit(parseInt(event.target.parentElement.parentElement.id));
+      return;
     }
 
     if (item === 'title') {
