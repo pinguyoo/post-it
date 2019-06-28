@@ -1,16 +1,17 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy  } from '@angular/core';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
 import { fromEvent } from 'rxjs';
 import {  map, takeUntil, flatMap, finalize } from 'rxjs/operators';
 import { maxBy as _maxBy, find as _find, remove as _remove } from 'lodash';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
 
   notes: Note[];
   newNote: Note;
@@ -28,6 +29,10 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
     this.getNotes();
+  }
+
+  ngOnDestroy() {
+
   }
 
   getNotes() {
@@ -95,6 +100,7 @@ export class BoardComponent implements OnInit {
           takeUntil(mouseUp$),
         )
       }),
+      untilDestroyed(this),
     )
 
     source$.subscribe((element) => {
@@ -122,6 +128,7 @@ export class BoardComponent implements OnInit {
           maxHeight: (parent.offsetHeight - y) + 'px',
         }
       }),
+      untilDestroyed(this),
     );
 
     source$.subscribe(element => {

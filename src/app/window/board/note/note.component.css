@@ -20,10 +20,6 @@
     background: rgba(235, 110, 110, 0.7);
 }
 
-.bar:hover {
-    cursor: pointer;
-}
-
 .body {
     padding: 10px;
 }
@@ -61,6 +57,12 @@
 
 .content.editing {
     background: rgba(210, 210, 210, 0.5);
+}
+
+.bar:hover,
+.title:hover:not(.editing),
+.content:hover:not(.editing) {
+    cursor: pointer;
 }
 
 .icon-pets {
