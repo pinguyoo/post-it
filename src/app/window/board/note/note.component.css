@@ -2,7 +2,6 @@
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.384);
     width: 200px;
     position: absolute;
-    overflow-y: auto;
 }
 
 .note.selected {
@@ -48,6 +47,7 @@
     overflow-wrap: break-word;
     border-style: none;
     white-space: pre-wrap;
+    overflow-y: auto;
 }
 
 .title.editing {

@@ -1,4 +1,4 @@
-<div class="note" [attr.id]="note.id" [class.selected]="note.selected" [style.left.%]="note.coordinate.x" [style.top.%]="note.coordinate.y" [style.z-index]="note.coordinate.z" [style.max-height]="note.maxHeight">
+<div class="note" [attr.id]="note.id" [class.selected]="note.selected" [style.left.%]="note.coordinate.x" [style.top.%]="note.coordinate.y" [style.z-index]="note.coordinate.z">
   <div class="bar" [class.selected]="note.selected"></div>
   <div class="body" [style.background]="note.color" [style.color]="darkMode ? 'white' : 'black'">
       <div class="meta">
@@ -25,6 +25,7 @@
         #content
         [contentEditable]="contentEditing"
         [class.editing]="contentEditing"
+        [style.max-height]="note.maxHeight"
         (dblclick)="edit('content')"
         (keyup.enter)="onEnter($event)"
         (keydown.enter)="onEnterDown($event)"

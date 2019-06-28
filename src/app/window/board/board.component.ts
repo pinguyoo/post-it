@@ -125,7 +125,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           x: (x / window.innerWidth) * 100,
           y: (y / window.innerHeight) * 100,
           target: event.target as HTMLElement,
-          maxHeight: (parent.offsetHeight - y) + 'px',
+          maxHeight: (parent.offsetHeight - y - 100) + 'px',
         }
       }),
       untilDestroyed(this),
